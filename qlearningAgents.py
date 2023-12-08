@@ -65,6 +65,7 @@ class QLearningAgent(ReinforcementAgent):
           terminal state, you should return a value of 0.0.
         """
         "*** YOUR CODE HERE ***"
+
         legalActions = self.getLegalActions(state)  # Get the legal actions of the state
         if not legalActions:  # If there are no legal actions
             return 0.0
