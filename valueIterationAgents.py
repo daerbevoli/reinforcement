@@ -24,7 +24,7 @@
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
 # Student side autograding was added by Brad Miller, Nick Hay, and
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
-
+import random
 
 import mdp, util
 
@@ -156,6 +156,15 @@ class AsynchronousValueIterationAgent(ValueIterationAgent):
 
     def runValueIteration(self):
         "*** YOUR CODE HERE ***"
+        for i in range(self.iterations):
+            new_values = util.Counter()
+            state = random.choice(self.mdp.getStates())
+            if self.mdp.isTerminal(state):
+                continue
+            best_action = self.computeActionFromValues(state)
+            if best_action is not None:
+                new_values[state] = self.computeQValueFromValues(state, best_action)
+            self.values = new_values
 
 
 class PrioritizedSweepingValueIterationAgent(AsynchronousValueIterationAgent):
