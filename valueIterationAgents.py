@@ -157,14 +157,13 @@ class AsynchronousValueIterationAgent(ValueIterationAgent):
     def runValueIteration(self):
         "*** YOUR CODE HERE ***"
         for i in range(self.iterations):
-            new_values = util.Counter()
             state = random.choice(self.mdp.getStates())
             if self.mdp.isTerminal(state):
                 continue
+                
             best_action = self.computeActionFromValues(state)
             if best_action is not None:
-                new_values[state] = self.computeQValueFromValues(state, best_action)
-            self.values = new_values
+                self.values[state] = self.computeQValueFromValues(state, best_action)
 
 
 class PrioritizedSweepingValueIterationAgent(AsynchronousValueIterationAgent):
