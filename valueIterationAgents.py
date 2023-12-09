@@ -156,6 +156,11 @@ class AsynchronousValueIterationAgent(ValueIterationAgent):
 
     def runValueIteration(self):
         "*** YOUR CODE HERE ***"
+
+        # The code randomly selects a state in each iteration
+        # and updates the value based on the current best action
+        # if the state is a terminal state it skips? the state
+        
         for i in range(self.iterations):
             state = random.choice(self.mdp.getStates())
             if self.mdp.isTerminal(state):
