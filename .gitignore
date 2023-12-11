@@ -1,2 +1,4 @@
 /layouts
 /test_cases
+.idea
+__pycache__/
