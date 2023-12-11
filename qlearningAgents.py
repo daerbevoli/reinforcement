@@ -107,7 +107,7 @@ class QLearningAgent(ReinforcementAgent):
         if util.flipCoin(self.epsilon):  # With probability self.epsilon, we should take a random action
             # self.epsilon is the exploration rate,  it's a value between 0 and 1 that determines how frequently the
             # agent chooses a random action instead of the best-known action according to its current Q-values.
-            # util.flipCoing returns True with a prob of self.epsilon and False with a prob of 1 - self.epsilon.
+            # util.flipCoin returns True with a prob of self.epsilon and False with a prob of 1 - self.epsilon.
             action = random.choice(legalActions)  # Choose a random action
         else:
             action = self.computeActionFromQValues(state)  # Choose the best action
@@ -191,14 +191,30 @@ class ApproximateQAgent(PacmanQAgent):
           where * is the dotProduct operator
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        # Q(s,a) = ∑i=1 fi(s,a)*wi
+
+        features = self.featExtractor.getFeatures(state, action)
+        return self.weights * features
+
+        #util.raiseNotDefined()
 
     def update(self, state, action, nextState, reward):
         """
            Should update your weights based on transition
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        # diff = (r + γ*max(Q(s',a'))) - Q(s,a)
+        # wi <- wi + α*diff*fi(s,a)
+
+        features = self.featExtractor.getFeatures(state, action)
+        nextQ = self.computeValueFromQValues(nextState)
+
+        diff = (reward + self.discount * nextQ) - self.getQValue(state, action)
+
+        for feature in features:
+            self.weights[feature] += self.alpha * diff * features[feature]
+
+        #util.raiseNotDefined()
 
     def final(self, state):
         "Called at the end of each game."
@@ -209,4 +225,5 @@ class ApproximateQAgent(PacmanQAgent):
         if self.episodesSoFar == self.numTraining:
             # you might want to print your weights here for debugging
             "*** YOUR CODE HERE ***"
+            print(self.weights)
             pass
