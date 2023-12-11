@@ -169,6 +169,7 @@ class AsynchronousValueIterationAgent(ValueIterationAgent):
             best_action = self.computeActionFromValues(state)
             if best_action is not None:
                 self.values[state] = self.computeQValueFromValues(state, best_action)
+                # not working
 
 
 class PrioritizedSweepingValueIterationAgent(AsynchronousValueIterationAgent):
